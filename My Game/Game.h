@@ -39,8 +39,10 @@ class CGame:
     ~CGame(); ///< Destructor.
 
     void Initialize(); ///< Initialize the game.
+    void Update(float dt);
     void ProcessFrame(); ///< Process an animation frame.
     void Release(); ///< Release the renderer.
+    void Shutdown();
 }; //CGame
 
 #endif //__L4RC_GAME_GAME_H__

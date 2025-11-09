@@ -5,3 +5,8 @@
 #include "SpriteRenderer.h"
 #include "Timer.h"
 #include <btBulletDynamicsCommon.h>
+
+//forward declarations
+class CPhysics;
+
+extern CPhysics* g_pPhysics;

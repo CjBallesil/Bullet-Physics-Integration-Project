@@ -7,6 +7,7 @@
 #include "GameDefines.h"
 #include "SpriteRenderer.h"
 #include "ComponentIncludes.h"
+#include "Physics.h"
 
 #include "shellapi.h"
 
@@ -21,10 +22,36 @@ CGame::~CGame(){
 /// begin the game.
 
 void CGame::Initialize(){
+    //initialize bullet
+    g_pPhysics = new CPhysics();
+    g_pPhysics->InitializeBullet();
+
   m_pRenderer = new LSpriteRenderer(eSpriteMode::Batched2D); 
   m_pRenderer->Initialize(eSprite::Size); 
   LoadImages(); //load images from xml file list
   LoadSounds(); //load the sounds for this game
+
+
+  //--create a test ball--
+  btCollisionShape* sphereShape = new btSphereShape(btScalar(1.0f)); //radius 1
+
+  //set up motion state and transform
+  btTransform startTransform;
+  startTransform.setIdentity();
+  startTransform.setOrigin(btVector3(0, 10, 0));
+
+  //set mass and inertia
+  btScalar mass = 1.0f;
+  btVector3 inertia(0, 0, 0);
+  sphereShape->calculateLocalInertia(mass, inertia);
+
+  //create rigid body
+  btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
+  btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, sphereShape, inertia);
+  btRigidBody* body = new btRigidBody(rbInfo);
+
+  //add to bullet world
+  CPhysics::dynamicsWorld->addRigidBody(body);
 
   BeginGame();
 } //Initialize
@@ -64,6 +91,10 @@ void CGame::Release(){
 void CGame::BeginGame(){  
   delete m_pSpriteDesc;
 } //BeginGame
+
+void CGame::Update(float dt) {
+    g_pPhysics->UpdateBullet(dt);
+}
 
 /// Poll the keyboard state and respond to the key presses that happened since
 /// the last frame.
@@ -120,3 +151,9 @@ void CGame::ProcessFrame(){
 
   RenderFrame(); //render a frame of animation
 } //ProcessFrame
+
+void CGame::Shutdown() {
+    g_pPhysics->ShutDownBullet();
+    delete g_pPhysics;
+    g_pPhysics = nullptr;
+}
