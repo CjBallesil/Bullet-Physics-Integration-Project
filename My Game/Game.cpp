@@ -3,10 +3,10 @@
 
 #include "Game.h"
 
+#include "Common.h"
 #include "GameDefines.h"
 #include "SpriteRenderer.h"
 #include "ComponentIncludes.h"
-#include <btBulletDynamicsCommon.h>
 
 #include "shellapi.h"
 
