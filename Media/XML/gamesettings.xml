@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!-- Game settings -->
+
+<settings>
+  <game name="Blank 2D Game" />
+  <renderer width="1024" height="768"/>
+   
+  <font file="Media\Fonts\AverageSans_24.spritefont"/>
+
+  <!-- sprites -->
+   
+  <sprites path="Media\Images">
+    <sprite name="background" file="background.png"/>
+  </sprites>
+
+  <!-- sound -->
+  
+  <sounds path="Media\Sounds">
+  </sounds>
+</settings>
