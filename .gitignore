@@ -1,0 +1,15 @@
+#Ignore Visual Studio workspace and build artifacts
+.vs/
+*.user
+*.suo
+*.VC.db
+*.VC.opendb
+Debug/
+Release/
+x64/
+*.obj
+*.pdb
+*.exe
+*.dll
+*.log
+ipch/
