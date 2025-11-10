@@ -1,13 +1,15 @@
 #include "Ball.h"
 #include "SpriteRenderer.h"
+#include "GameDefines.h"
 #include "Common.h"
 #include <random>
 #include "ComponentIncludes.h"
 #include <btBulletDynamicsCommon.h>
 
+
 void CBall::Create(btDiscreteDynamicsWorld* world) {
 	//generate numbers
-	btVector3& pos = {RandFloat(-10.0f, 10.0f), RandFloat(10.0f, 30.0f), 0};
+	btVector3 pos = {RandFloat(-10.0f, 10.0f), RandFloat(10.0f, 30.0f), 0};
 	float radius = RandFloat(1.0f, 5.0f);
 	float mass = RandFloat(1.0f, 10.0f);
 	m_vTint = { RandFloat(0.2f, 1.0f), RandFloat(0.2f, 1.0f), RandFloat(0.2f, 1.0f), RandFloat(0.2f, 1.0f) };
@@ -56,8 +58,11 @@ void CBall::Render() {
 	desc.m_fRoll = 0.0f;
 	desc.m_fAlpha = 1.0f;
 	desc.m_f4Tint = m_vTint;
+	desc.m_nSpriteIndex = static_cast<UINT>(eSprite::Pig);
 
+	
 	m_pRenderer->Draw(&desc);
+	OutputDebugStringA("Rendering ball\n");
 }
 
 void CBall::Destroy(btDiscreteDynamicsWorld* world) {

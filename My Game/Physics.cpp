@@ -17,7 +17,7 @@ void CPhysics::InitializeBullet() {
 		dispatcher, broadphase, solver, collisionConfiguration
 	);
 
-	dynamicsWorld->setGravity(btVector3(0, -20.0f, 0));
+	dynamicsWorld->setGravity(btVector3(0, -9.8f, 0));
 }
 
 void CPhysics::UpdateBullet(float dt) {

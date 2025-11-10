@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Physics.h"
+#include "ComponentIncludes.h"
 
 class CBall {
 public:

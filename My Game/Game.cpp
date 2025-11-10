@@ -11,6 +11,8 @@
 
 #include "shellapi.h"
 
+std::vector<CBall*> g_Balls; //< hold pointers for balls
+
 /// Delete the sprite descriptor. The renderer needs to be deleted before this
 /// destructor runs so it will be done elsewhere.
 
@@ -32,9 +34,10 @@ void CGame::Initialize(){
   LoadSounds(); //load the sounds for this game
 
   //spawn balls
-  for (int i = 0; i < 10; ++i) {
+  for (int i = 0; i < 2; ++i) {
       CBall* ball = new CBall();
       ball->Create(g_pPhysics->dynamicsWorld);
+      g_Balls.push_back(ball);
   }
 
 
@@ -53,6 +56,7 @@ void CGame::LoadImages(){
   m_pRenderer->BeginResourceUpload();
 
   m_pRenderer->Load(eSprite::Background, "background");
+  m_pRenderer->Load(eSprite::Pig, "pig");
 
   m_pRenderer->EndResourceUpload();
 } //LoadImages
@@ -79,7 +83,15 @@ void CGame::BeginGame(){
 } //BeginGame
 
 void CGame::Update(float dt) {
+    //verify balls exist
+    char buf[64];
+    sprintf_s(buf, "Ball count: %zu\n", g_Balls.size());
+    OutputDebugString(buf);
+
+
     g_pPhysics->UpdateBullet(dt);
+
+    for (auto b : g_Balls) b->Update(dt);
 }
 
 /// Poll the keyboard state and respond to the key presses that happened since
@@ -116,6 +128,7 @@ void CGame::RenderFrame(){
   
   m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background
   if(m_bDrawFrameRate)DrawFrameRateText(); //draw frame rate, if required
+  for (auto b : g_Balls) b->Render();
 
   m_pRenderer->EndFrame(); //required after rendering
 } //RenderFrame
@@ -139,6 +152,12 @@ void CGame::ProcessFrame(){
 } //ProcessFrame
 
 void CGame::Shutdown() {
+    for (auto b : g_Balls) {
+        b->Destroy(g_pPhysics->dynamicsWorld);
+        delete b;
+    }
+    g_Balls.clear();
+
     g_pPhysics->ShutDownBullet();
     delete g_pPhysics;
     g_pPhysics = nullptr;

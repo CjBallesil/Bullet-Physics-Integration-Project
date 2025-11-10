@@ -11,6 +11,7 @@
    
   <sprites path="Media\Images">
     <sprite name="background" file="background.png"/>
+	  <sprite name="pig" file="pig.png"/>
   </sprites>
 
   <!-- sound -->

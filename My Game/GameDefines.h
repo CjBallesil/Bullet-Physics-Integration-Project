@@ -14,7 +14,7 @@
 /// memory. `Size` must be last.
 
 enum class eSprite: UINT{
-  Background,
+  Background, Pig, 
   Size  //MUST BE LAST
 }; //eSprite
 
