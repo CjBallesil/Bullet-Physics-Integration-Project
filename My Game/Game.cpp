@@ -8,6 +8,7 @@
 #include "SpriteRenderer.h"
 #include "ComponentIncludes.h"
 #include "Physics.h"
+#include "Ball.h"
 
 #include "shellapi.h"
 
@@ -31,27 +32,13 @@ void CGame::Initialize(){
   LoadImages(); //load images from xml file list
   LoadSounds(); //load the sounds for this game
 
+  //spawn balls
+  for (int i = 0; i < 10; ++i) {
+      CBall* ball = new CBall();
+      ball->Create(g_pPhysics->dynamicsWorld);
+  }
 
-  //--create a test ball--
-  btCollisionShape* sphereShape = new btSphereShape(btScalar(1.0f)); //radius 1
 
-  //set up motion state and transform
-  btTransform startTransform;
-  startTransform.setIdentity();
-  startTransform.setOrigin(btVector3(0, 10, 0));
-
-  //set mass and inertia
-  btScalar mass = 1.0f;
-  btVector3 inertia(0, 0, 0);
-  sphereShape->calculateLocalInertia(mass, inertia);
-
-  //create rigid body
-  btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
-  btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, sphereShape, inertia);
-  btRigidBody* body = new btRigidBody(rbInfo);
-
-  //add to bullet world
-  CPhysics::dynamicsWorld->addRigidBody(body);
 
   BeginGame();
 } //Initialize

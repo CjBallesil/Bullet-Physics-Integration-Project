@@ -8,5 +8,7 @@
 
 //forward declarations
 class CPhysics;
+class LSpriteRenderer;
 
 extern CPhysics* g_pPhysics;
+LSpriteRenderer* m_pRenderer;
