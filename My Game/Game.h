@@ -8,6 +8,7 @@
 #include "Settings.h"
 #include "SpriteDesc.h"
 #include "SpriteRenderer.h"
+#include "Common.h"
 
 /// \brief The game class.
 ///
@@ -25,7 +26,6 @@ class CGame:
   private:
     bool m_bDrawFrameRate = false; ///< Draw the frame rate.
     LSpriteDesc2D* m_pSpriteDesc = nullptr; ///< Sprite descriptor.
-    LSpriteRenderer* m_pRenderer = nullptr; ///< Pointer to renderer.
     
     void LoadImages(); ///< Load images.
     void LoadSounds(); ///< Load sounds.

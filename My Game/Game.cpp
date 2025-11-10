@@ -3,7 +3,6 @@
 
 #include "Game.h"
 
-#include "Common.h"
 #include "GameDefines.h"
 #include "SpriteRenderer.h"
 #include "ComponentIncludes.h"
