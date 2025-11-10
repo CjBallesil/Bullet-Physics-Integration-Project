@@ -2,6 +2,8 @@
 #include "SpriteRenderer.h"
 #include "Common.h"
 #include <random>
+#include "ComponentIncludes.h"
+#include <btBulletDynamicsCommon.h>
 
 void CBall::Create(btDiscreteDynamicsWorld* world) {
 	//generate numbers
