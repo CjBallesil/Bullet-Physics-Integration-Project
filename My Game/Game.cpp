@@ -124,6 +124,7 @@ void CGame::DrawFrameRateText(){
 /// frame so that it can let Direct3D do its pipelining jiggery-pokery.
 
 void CGame::RenderFrame(){
+    Update(1.0f / 60.0f);
   m_pRenderer->BeginFrame(); //required before rendering
   
   m_pRenderer->Draw(eSprite::Background, m_vWinCenter); //draw background

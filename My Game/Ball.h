@@ -18,4 +18,5 @@ public:
 private:
 	float posY = 0.0f;
 	float posX = 0.0f;
+	float scale = 30.0f;
 };

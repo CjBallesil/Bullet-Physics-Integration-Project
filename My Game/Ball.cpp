@@ -9,8 +9,8 @@
 
 void CBall::Create(btDiscreteDynamicsWorld* world) {
 	//generate numbers
-	btVector3 pos = {RandFloat(-10.0f, 10.0f), RandFloat(10.0f, 30.0f), 0};
-	float radius = RandFloat(1.0f, 5.0f);
+	btVector3 pos = { RandFloat(-10.0f, 10.0f), RandFloat(5.0f, 15.0f), 0 };
+	float radius = RandFloat(0.5f, 1.5f);
 	float mass = RandFloat(1.0f, 10.0f);
 	m_vTint = { RandFloat(0.2f, 1.0f), RandFloat(0.2f, 1.0f), RandFloat(0.2f, 1.0f), RandFloat(0.2f, 1.0f) };
 
@@ -41,20 +41,22 @@ void CBall::Update(float dt) {
 	body->getMotionState()->getWorldTransform(trans);
 	btVector3 pos = trans.getOrigin();
 
-	//store positions for rendering
-	posX = pos.x();
-	posY = pos.y();
+	float scale = 30.0f; // pixels per physics unit
+	posX = 400.0f + pos.x() * scale; // screen center at (400,300)
+	posY = 300.0f - pos.y() * scale;
 }
 
 void CBall::Render() {
+
 	float radius = static_cast<btSphereShape*>(shape)->getRadius();
+	float diameter = radius * 2.0f * scale;
 
 	//draw
 	LSpriteDesc2D desc;
 	desc.m_nCurrentFrame = 0;
 	desc.m_vPos = { posX, posY };
-	desc.m_fXScale = radius * 2.0f;
-	desc.m_fYScale = radius * 2.0f;
+	desc.m_fXScale = diameter / 256.0f;
+	desc.m_fYScale = diameter / 173.0f;
 	desc.m_fRoll = 0.0f;
 	desc.m_fAlpha = 1.0f;
 	desc.m_f4Tint = m_vTint;
