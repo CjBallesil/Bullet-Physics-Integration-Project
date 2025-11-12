@@ -9,8 +9,8 @@
 
 void CBall::Create(btDiscreteDynamicsWorld* world) {
 	//generate numbers
-	btVector3 pos = { RandFloat(-10.0f, 10.0f), RandFloat(5.0f, 15.0f), 0 };
-	float radius = RandFloat(0.5f, 1.5f);
+	btVector3 pos = { RandFloat(-10.0f, 10.0f), RandFloat(-10.0f, 10.0f), 0 };
+	float radius = RandFloat(0.5f, 2.5f);
 	float mass = RandFloat(1.0f, 10.0f);
 	m_vTint = { RandFloat(0.2f, 1.0f), RandFloat(0.2f, 1.0f), RandFloat(0.2f, 1.0f), RandFloat(0.2f, 1.0f) };
 
@@ -31,9 +31,28 @@ void CBall::Create(btDiscreteDynamicsWorld* world) {
 	motionState = new btDefaultMotionState(startTransform);
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, inertia);
 	body = new btRigidBody(rbInfo);
+	body->setRestitution(1.0f);
 
 	//add to bullet world
 	world->addRigidBody(body);
+
+	// debug after adding the ball
+	btTransform t;
+	body->getMotionState()->getWorldTransform(t);
+	btVector3 origin = t.getOrigin();
+
+	btVector3 aabbMin, aabbMax;
+	body->getCollisionShape()->getAabb(t, aabbMin, aabbMax);
+
+	char buf[256];
+	sprintf_s(buf, "BALL CREATED: pos=(%f,%f,%f) radius=%f mass=%f\n", origin.x(), origin.y(), origin.z(),
+		static_cast<btSphereShape*>(shape)->getRadius(), mass);
+	OutputDebugStringA(buf);
+
+	sprintf_s(buf, "BALL AABB: min=(%f,%f,%f) max=(%f,%f,%f)\n", aabbMin.x(), aabbMin.y(), aabbMin.z(),
+		aabbMax.x(), aabbMax.y(), aabbMax.z());
+	OutputDebugStringA(buf);
+
 }
 
 void CBall::Update(float dt) {
@@ -41,9 +60,8 @@ void CBall::Update(float dt) {
 	body->getMotionState()->getWorldTransform(trans);
 	btVector3 pos = trans.getOrigin();
 
-	float scale = 30.0f; // pixels per physics unit
-	posX = 400.0f + pos.x() * scale; // screen center at (400,300)
-	posY = 300.0f - pos.y() * scale;
+	posX = 512.0f + pos.x() * scale; // screen center at (512,384)
+	posY = 384.0f + pos.y() * scale;
 }
 
 void CBall::Render() {
@@ -64,7 +82,7 @@ void CBall::Render() {
 
 	
 	m_pRenderer->Draw(&desc);
-	OutputDebugStringA("Rendering ball\n");
+	//OutputDebugStringA("Rendering ball\n");
 }
 
 void CBall::Destroy(btDiscreteDynamicsWorld* world) {

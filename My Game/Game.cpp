@@ -34,7 +34,7 @@ void CGame::Initialize(){
   LoadSounds(); //load the sounds for this game
 
   //spawn balls
-  for (int i = 0; i < 2; ++i) {
+  for (int i = 0; i < 10; ++i) {
       CBall* ball = new CBall();
       ball->Create(g_pPhysics->dynamicsWorld);
       g_Balls.push_back(ball);
@@ -83,10 +83,10 @@ void CGame::BeginGame(){
 } //BeginGame
 
 void CGame::Update(float dt) {
-    //verify balls exist
-    char buf[64];
-    sprintf_s(buf, "Ball count: %zu\n", g_Balls.size());
-    OutputDebugString(buf);
+    ////verify balls exist
+    //char buf[64];
+    //sprintf_s(buf, "Ball count: %zu\n", g_Balls.size());
+    //OutputDebugString(buf);
 
 
     g_pPhysics->UpdateBullet(dt);
