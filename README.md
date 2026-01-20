@@ -1,3 +1,4 @@
 # Bullet-Physics-Integration-Project
+An assignment for class focused on working with LARC Engine's Bullet Physics.
 ## About
-This was meant to be a physics simulator that would spawn balls for the player to interact with. However, I ran into so many different problems that I did not reach a working state by the due date. I have continued to work on it for my own sake. Grade by the commits submitted by the due date if you must. Please take the time to at least evaluate the effort I put into this assignment despite the fact that it is so bad when it runs.
+This was meant to be a physics simulator that would spawn balls for the player to interact with, but is currently non-interactable.
